@@ -1,0 +1,40 @@
+### webapp.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ic-webapp
+  namespace: icgroup
+  labels:
+    env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ic-webapp
+  template:
+    metadata:
+      labels:
+        app: ic-webapp
+    spec:
+      containers:
+        - name: ic-webapp
+          image: vaksalan25/ic-webapp:1.0
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: webapp-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ic-webapp
+  namespace: icgroup
+spec:
+  type: NodePort
+  selector:
+    app: ic-webapp
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080

@@ -1,0 +1,21 @@
+### pgadmin-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-config
+  namespace: icgroup
+data:
+  servers.json: |
+    {
+      "Servers": {
+        "1": {
+          "Name": "Odoo DB",
+          "Group": "Servers",
+          "Host": "postgres",
+          "Port": 5432,
+          "Username": "odoo",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        }
+      }
+    }
